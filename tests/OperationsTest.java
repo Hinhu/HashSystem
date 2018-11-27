@@ -46,4 +46,42 @@ class OperationsTest {
         assertArrayEquals(expectedVector, Operations.addToVector(startingVector, delta));
     }
 
+
+    /* xorVector method tests */
+    /* XORs each element with xorValue */
+    @Test
+    public void xorByPositiveValue(){
+        int[] startingVector = {74, 26, 99, 15, 58};
+        int xorValue = 42;
+        int[] expectedVector = {96, 48, 73, 37, 16};
+        assertArrayEquals(expectedVector, Operations.xorVector(startingVector, xorValue));
+    }
+
+    @Test
+    public void xorByNegativeValue(){
+        int[] startingVector = {62, 78, 192, 111};
+        int xorValue = -13;
+        int[] expectedVector = {-51, -67, -205, -100};
+        assertArrayEquals(expectedVector, Operations.xorVector(startingVector, xorValue));
+    }
+
+
+    /* rotateVector method tests */
+    /* applies bitwise rotation on each element of vector */
+    @Test
+    public void rightRotateVector(){
+        int[] startingVector = {28, 99, 115, 210};
+        int distance = 25;
+        int[] expectedVector = {3584, 12672, 14720, 26880};
+        assertArrayEquals(expectedVector, Operations.rotateVector(startingVector, distance));
+    }
+
+    @Test
+    public void leftRotateVector(){
+        int[] startingVector = {17, 205, 25, 11};
+        int distance = -4;
+        int[] expectedVector = {272, 3280, 400, 176};
+        assertArrayEquals(expectedVector, Operations.rotateVector(startingVector, distance));
+    }
+
 }
