@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class OperationsTest {
 
     /* textToVector method tests */
@@ -66,22 +67,141 @@ class OperationsTest {
     }
 
 
-    /* rotateVector method tests */
+    /* rotateBitwiseVector method tests */
     /* applies bitwise rotation on each element of vector */
     @Test
-    public void rightRotateVector(){
+    public void rightRotateBitwiseVector(){
         int[] startingVector = {28, 99, 115, 210};
         int distance = 25;
         int[] expectedVector = {3584, 12672, 14720, 26880};
+        assertArrayEquals(expectedVector, Operations.rotateBitwiseVector(startingVector, distance));
+    }
+
+    @Test
+    public void leftRotateBitwiseVector(){
+        int[] startingVector = {17, 205, 25, 11};
+        int distance = -4;
+        int[] expectedVector = {272, 3280, 400, 176};
+        assertArrayEquals(expectedVector, Operations.rotateBitwiseVector(startingVector, distance));
+    }
+
+
+    /* vectorToText method tests */
+    /* converts int[] of ASCII codes to String */
+    @Test
+    public void testPositiveValues(){
+        int[] startingVector = {68, 122, 96, 56};
+        String expectedText = "Dz`8";
+        assertEquals(expectedText, Operations.vectorToText(startingVector));
+    }
+
+    @Test
+    public void testNegativeValues(){
+        int[] startingVector = {-20000, -35000, -45123};
+        String expectedText = "뇠睈侽";
+        assertEquals(expectedText, Operations.vectorToText(startingVector));
+    }
+
+    @Test
+    public void testEmptyVector(){
+        int[] startingVector = {};
+        String expectedText = "";
+        assertEquals(expectedText, Operations.vectorToText(startingVector));
+    }
+
+    /* rotateVector method tests */
+    /* rotates elements of vector */
+    @Test
+    public void rotateRightVector(){
+        int[] startingVector = {67, 27, 83, 55};
+        int distance = 2;
+        int[] expectedVector = {83, 55, 67, 27};
         assertArrayEquals(expectedVector, Operations.rotateVector(startingVector, distance));
     }
 
     @Test
-    public void leftRotateVector(){
-        int[] startingVector = {17, 205, 25, 11};
-        int distance = -4;
-        int[] expectedVector = {272, 3280, 400, 176};
+    public void rotateLeftVector(){
+        int[] startingVector = {102, 89, 56, 111};
+        int distance = -1;
+        int[] expectedVector = {89, 56, 111, 102};
         assertArrayEquals(expectedVector, Operations.rotateVector(startingVector, distance));
     }
+
+    /* addIterToVector method tests */
+    /* increments each element by its index multiplied by iterStep */
+    @Test
+    public void addPositiveIterToVector(){
+        int[] startingVector = {67, 57, 200, 143};
+        int iterStep = 2;
+        int[] expectedVector = {67, 59, 204, 149};
+        assertArrayEquals(expectedVector, Operations.addIterToVector(startingVector, iterStep));
+
+    }
+
+    /* addVectorToVector method tests */
+    /* increases each value from base vector by proper value from second vector */
+    @Test
+    public void addPositiveVector(){
+        int[] startingVector = {100, 162, 99, 56};
+        int[] secondVector = {56, 22, 109, 78};
+        int[] expectedVector = {156, 184, 208, 134};
+        assertArrayEquals(expectedVector, Operations.addVectorToVector(startingVector, secondVector));
+    }
+
+    @Test
+    public void addNegativeVector(){
+        int[] startingVector = {200, 158, 109};
+        int[] secondVector = {-67, -42, -112};
+        int[] expectedVector = {133, 116, -3};
+        assertArrayEquals(expectedVector, Operations.addVectorToVector(startingVector, secondVector));
+    }
+
+    @Test//(expected = IllegalArgumentException.class)
+    public void addVectorDifferentSize(){
+        int[] startingVector = {175, 89, 157};
+        int[] secondVector = {156, -142, 642, 251};
+        Operations.addVectorToVector(startingVector, secondVector);
+    }
+
+    @Test
+    public void addTwoEmptyVectors(){
+        int[] startingVector = {};
+        int[] secondVector = {};
+        int[] expectedVector = {};
+        assertArrayEquals(expectedVector, Operations.addVectorToVector(startingVector, secondVector));
+    }
+
+    /* chainXorVector method test */
+    /* XORs i'th element with i+1'th. Last element is XORed with the first of modified vector */
+    @Test
+    public void chainXorVector(){
+        int[] startingVector = {27, 37, 45, 15};
+        int[] expectedVector = {62, 8, 34, 49};
+        assertArrayEquals(expectedVector, Operations.chainXorVector(startingVector));
+    }
+
+    @Test
+    public void chainXorEmptyVector(){
+        int[] startingVector = {};
+        int[] expectedVector = {};
+        assertArrayEquals(expectedVector, Operations.chainXorVector(startingVector));
+    }
+
+
+    /* reversedChainXorVector method test */
+    /* XORs i'th element with i-1'th, starting from last element of vector */
+    @Test void reversedChainXorVector(){
+        int[] startingVector = {62, 8, 34, 49};
+        int[] expectedVector = {27, 37, 45, 15};
+        assertArrayEquals(expectedVector, Operations.reversedChainXorVector(startingVector));
+    }
+
+    @Test
+    public void reversedChainXorEmptyVector(){
+        int[] startingVector = {};
+        int[] expectedVector = {};
+        assertArrayEquals(expectedVector, Operations.reversedChainXorVector(startingVector));
+    }
+
 
 }
