@@ -14,11 +14,36 @@ public class Operations {
             vector[i] += delta;
         return vector;
     }
-    
-    public static int[] xorVector(int[] vector, int xorValue){ return new int[]{};}
-    public static int[] rotateBitwiseVector(int[] vector, int distance){ return new int[]{};}
-    public static String vectorToText(int[] vector){return "";}
-    public static int[] rotateVector(int[] vector, int distance){return new int[]{};}
+
+    public static int[] xorVector(int[] vector, int xorValue){
+        for(int i=0; i<vector.length; i++)
+            vector[i] = vector[i] ^ xorValue;
+        return vector;
+    }
+
+    public static int[] rotateBitwiseVector(int[] vector, int distance){
+        for(int i=0; i<vector.length; i++){
+            vector[i] = Integer.rotateRight(vector[i], distance);
+        }
+        return vector;
+    }
+
+    public static String vectorToText(int[] vector){
+        char[] chars = new char[vector.length];
+        for(int i=0; i<vector.length; i++)
+            chars[i] = (char)vector[i];
+        String text = String.valueOf(chars);
+        return text;
+    }
+    public static int[] rotateVector(int[] vector, int distance){
+        int[] tmp = new int[vector.length];
+        System.arraycopy(vector, 0, tmp, 0, vector.length);
+        for(int i=0; i<vector.length; i++){
+            int vectPos = distance < 0 ? (i-distance)%vector.length : (i+distance)%vector.length;
+            tmp[i] = vector[vectPos];
+        }
+        return tmp;
+    }
     public static int[] addIterToVector(int[] vector, int iterStep){return new int[]{};}
     public static int[] addVectorToVector(int[] vector, int[] addVect){return new int[]{};}
     public static int[] chainXorVector(int[] vector){return new int[]{};}
