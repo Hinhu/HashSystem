@@ -1,9 +1,8 @@
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-
-class OperationsTest {
+public class OperationsTest {
 
     /* textToVector method tests */
     /* converts String to int[] of ASCII codes */
@@ -156,7 +155,7 @@ class OperationsTest {
         assertArrayEquals(expectedVector, Operations.addVectorToVector(startingVector, secondVector));
     }
 
-    @Test//(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addVectorDifferentSize(){
         int[] startingVector = {175, 89, 157};
         int[] secondVector = {156, -142, 642, 251};
@@ -187,10 +186,10 @@ class OperationsTest {
         assertArrayEquals(expectedVector, Operations.chainXorVector(startingVector));
     }
 
-
     /* reversedChainXorVector method test */
     /* XORs i'th element with i-1'th, starting from last element of vector */
-    @Test void reversedChainXorVector(){
+    @Test
+    public void reversedChainXorVector(){
         int[] startingVector = {62, 8, 34, 49};
         int[] expectedVector = {27, 37, 45, 15};
         assertArrayEquals(expectedVector, Operations.reversedChainXorVector(startingVector));
@@ -202,6 +201,8 @@ class OperationsTest {
         int[] expectedVector = {};
         assertArrayEquals(expectedVector, Operations.reversedChainXorVector(startingVector));
     }
+
+
 
 
 }
