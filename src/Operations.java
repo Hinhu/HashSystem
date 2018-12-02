@@ -35,6 +35,7 @@ public class Operations {
         String text = String.valueOf(chars);
         return text;
     }
+
     public static int[] rotateVector(int[] vector, int distance){
         int[] tmp = new int[vector.length];
         System.arraycopy(vector, 0, tmp, 0, vector.length);
@@ -44,8 +45,21 @@ public class Operations {
         }
         return tmp;
     }
-    public static int[] addIterToVector(int[] vector, int iterStep){return new int[]{};}
-    public static int[] addVectorToVector(int[] vector, int[] addVect){return new int[]{};}
+
+    public static int[] addIterToVector(int[] vector, int iterStep){
+        for(int i=0; i<vector.length; i++){
+            vector[i] += i*iterStep;
+        }
+        return vector;
+    }
+
+    public static int[] addVectorToVector(int[] vector, int[] addVect){
+        if(vector.length != addVect.length)
+            throw new IllegalArgumentException("Vectors have different length");
+        for(int i=0; i<vector.length; i++)
+            vector[i] += addVect[i];
+        return vector;
+    }
     public static int[] chainXorVector(int[] vector){return new int[]{};}
     public static int[] reversedChainXorVector(int[] vector){return new int[]{};}
 

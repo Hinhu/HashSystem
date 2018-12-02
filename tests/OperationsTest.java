@@ -137,6 +137,15 @@ public class OperationsTest {
 
     }
 
+    @Test
+    public void addNegativeIterToVector(){
+        int[] startingVector = {155, 127, 76};
+        int iterStep = -1;
+        int[] expectedVector = {155, 126, 74};
+        assertArrayEquals(expectedVector, Operations.addIterToVector(startingVector, iterStep));
+
+    }
+
     /* addVectorToVector method tests */
     /* increases each value from base vector by proper value from second vector */
     @Test
