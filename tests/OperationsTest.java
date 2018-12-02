@@ -189,6 +189,13 @@ public class OperationsTest {
     }
 
     @Test
+    public void chainXorOneElementVector(){
+        int[] startingVector = {65};
+        int[] expectedVector = {65};
+        assertArrayEquals(expectedVector, Operations.chainXorVector(startingVector));
+    }
+
+    @Test
     public void chainXorEmptyVector(){
         int[] startingVector = {};
         int[] expectedVector = {};
@@ -201,6 +208,13 @@ public class OperationsTest {
     public void reversedChainXorVector(){
         int[] startingVector = {62, 8, 34, 49};
         int[] expectedVector = {27, 37, 45, 15};
+        assertArrayEquals(expectedVector, Operations.reversedChainXorVector(startingVector));
+    }
+
+    @Test
+    public void reversedChainXorOneElementVector(){
+        int[] startingVector = {56};
+        int[] expectedVector = {56};
         assertArrayEquals(expectedVector, Operations.reversedChainXorVector(startingVector));
     }
 

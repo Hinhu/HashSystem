@@ -60,8 +60,31 @@ public class Operations {
             vector[i] += addVect[i];
         return vector;
     }
-    public static int[] chainXorVector(int[] vector){return new int[]{};}
-    public static int[] reversedChainXorVector(int[] vector){return new int[]{};}
+
+    public static int[] chainXorVector(int[] vector){
+        if(vector.length == 0)
+            return new int[]{};
+        if(vector.length == 1)
+            return vector;
+        int[] result = new int[vector.length];
+        for(int i=0; i<vector.length-1; i++){
+            result[i] = vector[i] ^ vector[i+1];
+        }
+        result[result.length-1] = vector[vector.length-1] ^ result[0];
+        return result;
+    }
+
+    public static int[] reversedChainXorVector(int[] vector){
+        if(vector.length == 0)
+            return new int[]{};
+        if(vector.length == 1)
+            return vector;
+        int[] result = new int[vector.length];
+        result[vector.length-1] = vector[vector.length-1] ^ vector[0];
+        for(int i=vector.length-2; i>=0; i--)
+            result[i] = vector[i] ^ result[i+1];
+        return result;
+    }
 
 
     public static void main(String[] args){
