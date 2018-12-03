@@ -22,7 +22,7 @@ public class RSATest {
         System.out.println("encode");
         PublicKey key = new PublicKey(1083281, 207971);
         String text = "Lorem ipsum";
-        String expResult = "248986 451946 29125 439126 694665 606461 954403 822455 193986 542454 694665";
+        String expResult = "248986 451946 29125 439126 694665 606461 954403 822455 193986 542454 694665 ";
         String result = RSA.encode(key, text);
         assertEquals(expResult, result);
     }
@@ -31,7 +31,7 @@ public class RSATest {
     public void testDecode() {
         System.out.println("decode");
         PrivateKey key = new PrivateKey(1083281, 214331);
-        String crytpogram = "248986 451946 29125 439126 694665 606461 954403 822455 193986 542454 694665";
+        String crytpogram = "248986 451946 29125 439126 694665 606461 954403 822455 193986 542454 694665 ";
         String expResult = "Lorem ipsum";
         String result = RSA.decode(key, crytpogram);
         assertEquals(expResult, result);
