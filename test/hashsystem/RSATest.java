@@ -5,6 +5,13 @@
  */
 package hashsystem;
 
+import hashsystem.RSApack.PublicKey;
+import hashsystem.RSApack.Key;
+import hashsystem.RSApack.NotAPrimeNubmerException;
+import hashsystem.RSApack.PrivateKey;
+import hashsystem.RSApack.RSA;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -43,10 +50,57 @@ public class RSATest {
         long p = 10357L;
         long q = 10303L;
         long fi = (p - 1) * (q - 1);
-        Key[] result = RSA.generateKeys(p, q);
+        Key[] result = null;
+        try {
+            result = RSA.generateKeys(p, q);
+        } catch (NotAPrimeNubmerException ex) {
+            Logger.getLogger(RSATest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(result==null){
+            assertTrue(false);
+        }
         PublicKey pub = (PublicKey) result[0];
         PrivateKey priv = (PrivateKey) result[1];
         assertTrue(gcd(pub.getE(), fi) == 1 && (priv.getD() * pub.getE()) % fi == 1);
+    }
+    
+    @Test
+    public void testGenerateKeysException1() {
+        System.out.println("generateKeysException1");
+        long p = 10352L;
+        long q = 10303L;
+        Key[] result = null;
+        try {
+            result = RSA.generateKeys(p, q);
+        } catch (NotAPrimeNubmerException ex) {
+            assertTrue(true);
+        }
+    }
+    
+    @Test
+    public void testGenerateKeysException2() {
+        System.out.println("generateKeysException2");
+        long p = 10357L;
+        long q = 10302L;
+        Key[] result = null;
+        try {
+            result = RSA.generateKeys(p, q);
+        } catch (NotAPrimeNubmerException ex) {
+            assertTrue(true);
+        }
+    }
+    
+    @Test
+    public void testGenerateKeysException3() {
+        System.out.println("generateKeysException3");
+        long p = 10352L;
+        long q = 10302L;
+        Key[] result = null;
+        try {
+            result = RSA.generateKeys(p, q);
+        } catch (NotAPrimeNubmerException ex) {
+            assertTrue(true);
+        }
     }
 
     public long gcd(long a, long b) {

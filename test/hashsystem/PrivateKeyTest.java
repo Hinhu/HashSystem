@@ -5,6 +5,7 @@
  */
 package hashsystem;
 
+import hashsystem.RSApack.PrivateKey;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

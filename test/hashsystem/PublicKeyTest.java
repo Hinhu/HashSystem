@@ -5,10 +5,7 @@
  */
 package hashsystem;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import hashsystem.RSApack.PublicKey;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
