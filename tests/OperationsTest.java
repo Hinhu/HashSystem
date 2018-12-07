@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 public class OperationsTest {
 
     /* textToVector method tests */
-    /* converts String to int[] of ASCII codes */
     @Test
     public void textToVectorOrdinaryValues(){
         String text = "Testowe znaki";
@@ -29,7 +28,6 @@ public class OperationsTest {
 
 
     /* addToVector method tests */
-    /* increases each element of vector by certain value */
     @Test
     public void positiveIncreaseOfVector(){
         int[] startingVector = {26, 36, 84, 11, 86, 231, 223};
@@ -48,7 +46,6 @@ public class OperationsTest {
 
 
     /* xorVector method tests */
-    /* XORs each element with xorValue */
     @Test
     public void xorByPositiveValue(){
         int[] startingVector = {74, 26, 99, 15, 58};
@@ -67,7 +64,6 @@ public class OperationsTest {
 
 
     /* rotateBitwiseVector method tests */
-    /* applies bitwise rotation on each element of vector */
     @Test
     public void rightRotateBitwiseVector(){
         int[] startingVector = {28, 99, 115, 210};
@@ -86,7 +82,6 @@ public class OperationsTest {
 
 
     /* vectorToText method tests */
-    /* converts int[] of ASCII codes to String */
     @Test
     public void testPositiveValues(){
         int[] startingVector = {68, 122, 96, 56};
@@ -109,7 +104,6 @@ public class OperationsTest {
     }
 
     /* rotateVector method tests */
-    /* rotates elements of vector */
     @Test
     public void rotateRightVector(){
         int[] startingVector = {67, 27, 83, 55};
@@ -127,7 +121,6 @@ public class OperationsTest {
     }
 
     /* addIterToVector method tests */
-    /* increments each element by its index multiplied by iterStep */
     @Test
     public void addPositiveIterToVector(){
         int[] startingVector = {67, 57, 200, 143};
@@ -147,7 +140,6 @@ public class OperationsTest {
     }
 
     /* addVectorToVector method tests */
-    /* increases each value from base vector by proper value from second vector */
     @Test
     public void addPositiveVector(){
         int[] startingVector = {100, 162, 99, 56};
@@ -180,7 +172,6 @@ public class OperationsTest {
     }
 
     /* chainXorVector method test */
-    /* XORs i'th element with i+1'th. Last element is XORed with the first of modified vector */
     @Test
     public void chainXorVector(){
         int[] startingVector = {27, 37, 45, 15};
@@ -203,7 +194,6 @@ public class OperationsTest {
     }
 
     /* reversedChainXorVector method test */
-    /* XORs i'th element with i-1'th, starting from last element of vector */
     @Test
     public void reversedChainXorVector(){
         int[] startingVector = {62, 8, 34, 49};
