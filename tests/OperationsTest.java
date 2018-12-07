@@ -215,6 +215,72 @@ public class OperationsTest {
         assertArrayEquals(expectedVector, Operations.reversedChainXorVector(startingVector));
     }
 
+    /* xorWithVector method tests */
+    @Test
+    public void xorWithPositiveVector(){
+        int[] startingVector = {22, 67, 91};
+        int[] secondVector = {72, 56, 112};
+        int[] expectedVector = {94, 123, 43};
+        assertArrayEquals(expectedVector, Operations.xorWithVector(startingVector, secondVector));
+    }
+
+    @Test
+    public void xorWithNegativeVector(){
+        int[] startingVector = {141, 46, 110};
+        int[] secondVector = {-15, -78, -189};
+        int[] expectedVector = {-132, -100, -211};
+        assertArrayEquals(expectedVector, Operations.xorWithVector(startingVector, secondVector));
+    }
+
+    @Test
+    public void xorBothEmptyVectors(){
+        int[] startingVector = {};
+        int[] secondVector = {};
+        int[] expectedVector = {};
+        assertArrayEquals(expectedVector, Operations.xorWithVector(startingVector, secondVector));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void xorWithVectorDifferentSize(){
+        int[] startingVector = {156, 26, 22};
+        int[] secondVector = {91, 72, 187, 281};
+        Operations.xorWithVector(startingVector, secondVector);
+    }
+
+
+    /* andWithVector method tests */
+    @Test
+    public void andWithPositiveVector(){
+        int[] startingVector = {22, 67, 91};
+        int[] secondVector = {72, 56, 112};
+        int[] expectedVector = {0, 0, 80};
+        assertArrayEquals(expectedVector, Operations.andWithVector(startingVector, secondVector));
+    }
+
+    @Test
+    public void andWithNegativeVector(){
+        int[] startingVector = {141, 46, 110};
+        int[] secondVector = {-15, -78, -189};
+        int[] expectedVector = {129, 34, 66};
+        assertArrayEquals(expectedVector, Operations.andWithVector(startingVector, secondVector));
+    }
+
+    @Test
+    public void andBothEmptyVectors(){
+        int[] startingVector = {};
+        int[] secondVector = {};
+        int[] expectedVector = {};
+        assertArrayEquals(expectedVector, Operations.andWithVector(startingVector, secondVector));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void andWithVectorDifferentSize(){
+        int[] startingVector = {156, 126, 122};
+        int[] secondVector = {191, 272, 187, 281, 90};
+        Operations.andWithVector(startingVector, secondVector);
+    }
+
+
 
 
 
