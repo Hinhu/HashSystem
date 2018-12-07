@@ -97,10 +97,22 @@ public final class Operations {
     }
 
     /* XORs each value from vector with proper value from second vector */
-    public static int[] xorWithVector(int[] vector, int[] secondVector){return new int[]{};}
+    public static int[] xorWithVector(int[] vector, int[] secondVector){
+        if(vector.length != secondVector.length)
+            throw new IllegalArgumentException("Vectors have different length");
+        for(int i=0; i<vector.length; i++)
+            vector[i] = vector[i] ^ secondVector[i];
+        return vector;
+    }
 
     /* ANDs each value from vector with proper value from second vector */
-    public static int[] andWithVector(int[] vector, int[] secondVector){return new int[]{};}
+    public static int[] andWithVector(int[] vector, int[] secondVector){
+        if(vector.length != secondVector.length)
+            throw new IllegalArgumentException("Vectors have different length");
+        for(int i=0; i<vector.length; i++)
+            vector[i] = vector[i] & secondVector[i];
+        return vector;
+    }
 
     public static void main(String[] args) {
         System.out.println((char)(Integer.MAX_VALUE));
