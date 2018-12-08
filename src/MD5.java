@@ -1,6 +1,7 @@
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,8 +23,11 @@ public class MD5 {
     }
     
     public String generateMD5(String plain) {
+        md.update(plain.getBytes());
+        byte[] digest = md.digest();
+        String hashString = DatatypeConverter.printHexBinary(digest);
         
-        return plain;
+        return hashString;
     }
     
 }

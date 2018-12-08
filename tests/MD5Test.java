@@ -29,20 +29,21 @@ public class MD5Test {
     public void tearDown() {
     }
 
-    /**
-     * Test of generateMD5 method, of class MD5.
-     */
     @Test
     public void testNotNull() throws NoSuchAlgorithmException {
         MD5 instance = new MD5();
         assertNotNull(instance);
     }
     
+        /**
+     * Test of generateMD5 method, of class MD5.
+     * @throws java.security.NoSuchAlgorithmException
+     */
     @Test
     public void testGenerateMD5() throws NoSuchAlgorithmException {
         String plain = "secret";
         MD5 instance = new MD5();
-        String expResult = "5ebe2294ecd0e0f08eab7690d2a6ee69";
+        String expResult = "5EBE2294ECD0E0F08EAB7690D2A6EE69";
         String result = instance.generateMD5(plain);
         assertEquals(expResult, result);
     }
