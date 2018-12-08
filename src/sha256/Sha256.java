@@ -6,15 +6,15 @@
 package sha256;
 
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  *
  * @author zychp
  */
 public class Sha256 {
+    
+    private final boolean debug = false;
 
     private final int[] h = {
         0x6a09e667,
@@ -45,108 +45,113 @@ public class Sha256 {
         0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
         0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
     };
+    
 
-    private Chunk512 chunk = new Chunk512();
-    private final int [] words32 = new int[64];
-
-    public String getHash(String input) throws NoSuchAlgorithmException {
-        
+    public String getHash(String input) {
+                
         byte[] inputBytes = stringToBytes(input);
 
         byte[] padded = doPadding(inputBytes);
 
-        for (int i = 0; i < 64; i++) {
-            words32[i] = 0;
-        }
-        HashRegister tmpRegister = new HashRegister();
-        tmpRegister.setValue(Arrays.copyOf(h, 8));
+        HashRegister hashRegister = new HashRegister();
+        hashRegister.setValue(Arrays.copyOf(h, 8));
         
         for (int i = 0; i < padded.length / 64; i++) {
-
-            HashRegister hashRegister = new HashRegister();
-            hashRegister.setValue(tmpRegister.getRegisterCopy());
-
+            Chunk512 chunk = new Chunk512();
             System.arraycopy(padded, 64 * i, chunk.getChunk(), 0, 64);
+            
+            if(debug){
+                System.out.println("Chunk" + i);
+                System.out.println(humanReadableBytesToString(chunk.getChunk())+"\n");
+            }
+            
+            int [] words32 = new int[64];  // 32bit int x 64 words
 
-            System.out.println("Chunk" + i);
-            System.out.println(Arrays.toString(chunk.getChunk()));
-
-            setupWords();
+            initializeWords(words32, chunk);
+            
+            HashRegister tmpRegister = new HashRegister();
+            tmpRegister.setValue(hashRegister.getRegisterCopy());
 
             for (int j = 0; j < 64; ++j) {
-                calculate(hashRegister, words32, j);
+                calculate(tmpRegister, words32, j);
             }
 
             for (int j = 0; j < 8; ++j) {
-                tmpRegister.setValue(j, tmpRegister.getValue(j) + hashRegister.getValue(j));
+                hashRegister.setValue(j, hashRegister.getValue(j) + tmpRegister.getValue(j));
             }
         }
 
         byte[] hash = new byte[32];
 
         for (int i = 0; i < 8; i++) {
-            System.arraycopy(intToBytes(tmpRegister.getValue(i)), 0, hash, 4 * i, 4);
+            System.arraycopy(intToBytes(hashRegister.getValue(i)), 0, hash, 4 * i, 4);
         }
 
-        return DatatypeConverter.printHexBinary(hash);
+        return bytesToString(hash);
     }
 
-    byte[] stringToBytes(String s) throws NoSuchAlgorithmException {
-        byte[] bytes = "ashfbvyuagfawiigebuigbsdihadfdfgashfbvyuagfawiigebuigbsdihadfdfiigebuigbsdihadashfbvyuagfawiigebuigbsdihadfdfgashfbvyuagfawiigebuigbsdihadfdfiigebuigbsdihadashfbvyuagfawiigebuigbsdihadfdfgashfbvyuagfawiigebuigbsdihadfdfiigebuigbsdihad".getBytes(StandardCharsets.UTF_8);
-        return bytes;
-    }
-
-    byte[] doPadding(byte[] bytes) {
-        
-        System.out.println("\nPadding input:");
-        System.out.println(bytes.length);
-        System.out.println(Arrays.toString(bytes)+"\n");
+    private byte[] doPadding(byte[] bytes) {
+        if(debug){
+            System.out.println("Padding input bytes:"+ bytes.length);
+            System.out.println(humanReadableBytesToString(bytes)+"\n");
+        }
 
         int len = bytes.length;
         int tail = len % 64;
-        int padding;
+        int pad_len;
 
         if ((64 - tail >= 9)) {
-            padding = 64 - tail;
+            pad_len = 64 - tail;
         } else {
-            padding = 128 - tail;
+            pad_len = 128 - tail;
         }
 
-        byte[] pad = new byte[padding];
-        pad[0] = (byte) 0x80; // 1 and 7 zeros
+        byte[] padding = new byte[pad_len];
+        padding[0] = (byte) 0x80; // adding 1 and 7 zeros
         
-        long bits = len * 8; // message lenght in bits
+        long bits = len * 8; // message length in bits
         byte[] byteBits = longToBytes(bits);
         
-        System.arraycopy(byteBits, 0, pad, padding-8, byteBits.length);
+        System.arraycopy(byteBits, 0, padding, pad_len-8, byteBits.length);
         
-        byte[] output = new byte[len + padding];
+        byte[] output = new byte[len + pad_len];
 
         System.arraycopy(bytes, 0, output, 0, len);
-        System.arraycopy(pad, 0, output, len, pad.length);
+        System.arraycopy(padding, 0, output, len, pad_len);
         
-        System.out.println("\nPadding output:");
-        System.out.println(output.length);
-        System.out.println(Arrays.toString(output)+"\n");
-
+        if(debug){
+            System.out.println("Padding output bytes: "+ output.length);
+            System.out.println(humanReadableBytesToString(output)+"\n");
+        }
         return output;
     }
     
-    public static byte[] longToBytes(long l) {
-        byte[] result = new byte[8];
-        for (int i = 7; i >= 0; i--) {
-            result[i] = (byte)(l & 0xFF);
-            l >>= 8;
+    private void initializeWords(int[] words32, Chunk512 chunk) {
+        
+        for (int i = 0; i < 64; i++) {
+            words32[i] = 0;
         }
-    return result;
-}
+        
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 4; j++) {
+                words32[i] |= ((chunk.getChunk()[i * 4 + j] & 0xFF) << (24 - j * 8)); // TO CHANGE
+            }
+        }
 
-    Chunk512[] breakToChunks(byte[] bytes) {
-        Chunk512[] chunks = new Chunk512[1000];
-        return chunks;
+        for (int i = 16; i < 64; ++i) {
+            int s0 = Integer.rotateRight(words32[i - 15], 7)
+                    ^ Integer.rotateRight(words32[i - 15], 18)
+                    ^ (words32[i - 15] >>> 3);
+
+            int s1 = Integer.rotateRight(words32[i - 2], 17)
+                    ^ Integer.rotateRight(words32[i - 2], 19)
+                    ^ (words32[i - 2] >>> 10);
+
+            words32[i] = words32[i - 16] + s0 + words32[i - 7] + s1;
+        }
     }
-
-    public void calculate(HashRegister register, int[] words, int j) {
+        
+    private void calculate(HashRegister register, int[] words32, int j) {
 
         int s0 = Integer.rotateRight(register.getValue(0), 2)
                 ^ Integer.rotateRight(register.getValue(0), 13)
@@ -167,33 +172,46 @@ public class Sha256 {
 
         register.rollWIthValues(temp1, temp2);
     }
-
-    private void setupWords() {
-        for (int j = 0; j < 16; j++) {
-            words32[j] = 0;
-            for (int m = 0; m < 4; m++) {
-                words32[j] |= ((chunk.getChunk()[j * 4 + m] & 0x000000FF) << (24 - m * 8)); // TO CHANGE
-            }
+    
+    
+    private byte[] longToBytes(long l) {
+        byte[] result = new byte[8];
+        for (int i = 7; i >= 0; i--) {
+            result[i] = (byte)(l & 0xFF);
+            l >>= 8;
         }
-
-        for (int j = 16; j < 64; ++j) {
-            int s0 = Integer.rotateRight(words32[j - 15], 7)
-                    ^ Integer.rotateRight(words32[j - 15], 18)
-                    ^ (words32[j - 15] >>> 3);
-
-            int s1 = Integer.rotateRight(words32[j - 2], 17)
-                    ^ Integer.rotateRight(words32[j - 2], 19)
-                    ^ (words32[j - 2] >>> 10);
-
-            words32[j] = words32[j - 16] + s0 + words32[j - 7] + s1;
-        }
+        return result;
     }
-
-    public byte[] intToBytes(int i) {
-        byte[] b = new byte[4];
-        for (int c = 0; c < 4; c++) {
-            b[c] = (byte) ((i >>> (56 - 8 * c)) & 0xff);
+    
+    private byte[] intToBytes(int inp) {
+        byte[] result = new byte[4];
+        for (int i = 3; i >= 0; i--) {
+           result[i] = (byte)(inp & 0xFF);
+           inp >>= 8;
         }
-        return b;
+        return result;
+    }
+    
+    private byte[] stringToBytes(String input) {
+        byte[] result = input.getBytes(StandardCharsets.UTF_8);
+        return result;
+    }
+    
+    String bytesToString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02X", b));
+        }
+        return sb.toString().toLowerCase();
+    }
+    
+    String humanReadableBytesToString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (byte b : bytes) {
+            sb.append(String.format("%02X, ", b));
+        }
+        sb.append("]");
+        return sb.toString().toLowerCase();
     }
 }

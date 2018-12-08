@@ -10,22 +10,19 @@ package sha256;
  * @author zychp
  */
 public class Chunk512 {
-    private byte[] bytesOfChunk = new byte[64];
+    private byte[] bytesOfChunk = new byte[64]; // 512 bits chunk 64*8bit byte
 
-    public Chunk512() {      
+    public Chunk512() {
+        for(int i=0; i<64;i++){
+            bytesOfChunk[i]=0;
+        }
     }
 
     public void setChunk(byte[] bytesOfChunk) {
         this.bytesOfChunk = bytesOfChunk;
     }
     
-     
     public byte[] getChunk(){
         return bytesOfChunk;
-    }
-
-    @Override
-    public String toString() {
-        return "Chunk";
     }
 }

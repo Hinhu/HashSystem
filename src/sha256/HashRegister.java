@@ -12,7 +12,7 @@ import java.util.Arrays;
  * @author zychp
  */
 public class HashRegister {
-    private int[] words = new int[8]; // HashRegister 8 words x 
+    private int[] words = new int[8]; // HashRegister 32bit int x 8words
 
     
     public HashRegister() {
@@ -46,13 +46,5 @@ public class HashRegister {
             words[i] = words[i-1];
         }
         words[0] = (val1 + val2);
-    }  
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("HashRegister");
-        return "HashRegister{" + "words=" + words + '}';
-    }
-    
+    }      
 }
