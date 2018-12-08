@@ -53,7 +53,25 @@ class KeyGenerator {
         return x;
     }
 
-    String createSubKey(int seed){return new String();}
+    String createSubKey(int seed){
+        int[] a = Operations.textToVector(keyA);
+        int[] b = Operations.textToVector(keyB);
+        int[] c = Operations.textToVector(keyC);
+        int[] p = Operations.textToVector(password);
+
+        int esc = esincos2(seed);
+        int[] x = Operations.xorWithVector(p, a);
+        int[] x2 = Operations.xorWithVector(x, b);
+        int[] x3 = Operations.xorWithVector(x2, c);
+        int[] xch = Operations.chainXorVector(x3);
+        int[] xit = Operations.addIterToVector(xch, -1);
+
+        int[] aandb = Operations.andWithVector(a, b);
+        int[] xorab = Operations.xorWithVector(xit, aandb);
+        int[] xesc = Operations.addToVector(xorab, esc);
+        int[] result = Operations.chainXorVector(xesc);
+        return Operations.vectorToText(result);
+    }
 
     String getKeyA() {
         return keyA;
