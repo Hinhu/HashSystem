@@ -5,31 +5,32 @@
  */
 package sha256;
 
+import java.util.Arrays;
+
 /**
  *
  * @author zychp
  */
 public class HashRegister {
-    private int[] words = new int[8]; //CHANGED FROM WORD 32
+    private int[] words = new int[8]; // HashRegister 8 words x 
 
     
-    public HashRegister(int[] input) {
-        for(int i=0;i<8;i++){
-            words[i] = input[i];
-        }
+    public HashRegister() {
+        for (int i=0; i<8; i++){
+            words[i] = 0;
+        }        
     }
-      
-    
-    public void initializeRegister(){
-        
-    }
-
+     
     public void setValue(int id,int value) {
         words[id] = value;
     }
     
-    public int[] getRegister(){
-        return words;
+    public void setValue(int[] input) {
+        System.arraycopy(input, 0, words, 0, 8);
+    }
+    
+    public int[] getRegisterCopy(){
+        return Arrays.copyOf(words, 8);
     }
     
     public int getValue(int id){
@@ -46,5 +47,12 @@ public class HashRegister {
         }
         words[0] = (val1 + val2);
     }  
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("HashRegister");
+        return "HashRegister{" + "words=" + words + '}';
+    }
     
 }

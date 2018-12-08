@@ -47,7 +47,7 @@ public class Sha256 {
     };
 
     private Chunk512 chunk = new Chunk512();
-    private final int[] words32 = new int[64];
+    private final int [] words32 = new int[64];
 
     public String getHash(String input) throws NoSuchAlgorithmException {
         
@@ -58,29 +58,23 @@ public class Sha256 {
         for (int i = 0; i < 64; i++) {
             words32[i] = 0;
         }
-        HashRegister tmpRegister = new HashRegister(Arrays.copyOf(h, 8));
+        HashRegister tmpRegister = new HashRegister();
+        tmpRegister.setValue(Arrays.copyOf(h, 8));
+        
+        for (int i = 0; i < padded.length / 64; i++) {
 
-        for (int i = 0; i < padded.length / 64; ++i) {
-
-            HashRegister hashRegister = new HashRegister(tmpRegister.getRegister());
+            HashRegister hashRegister = new HashRegister();
+            hashRegister.setValue(tmpRegister.getRegisterCopy());
 
             System.arraycopy(padded, 64 * i, chunk.getChunk(), 0, 64);
 
+            System.out.println("Chunk" + i);
             System.out.println(Arrays.toString(chunk.getChunk()));
 
             setupWords();
 
-            for (int j = 0; i < 64; i++) {
-                System.out.println(words32[j]);
-            }
-
-
             for (int j = 0; j < 64; ++j) {
                 calculate(hashRegister, words32, j);
-            }
-
-            for (int s = 0; s < 8; s++) {
-                System.out.println(hashRegister.getValue(s));
             }
 
             for (int j = 0; j < 8; ++j) {
@@ -98,17 +92,16 @@ public class Sha256 {
     }
 
     byte[] stringToBytes(String s) throws NoSuchAlgorithmException {
-        byte[] bytes = "ashfbvyuagfawiigebuigbsdihadf".getBytes(StandardCharsets.UTF_8);
-        System.out.println(Arrays.toString(bytes));
-        return bytes;
-    }
-
-    byte[] intToBytes(String s) {
-        byte[] bytes = {1, 2, 3};
+        byte[] bytes = "ashfbvyuagfawiigebuigbsdihadfdfgashfbvyuagfawiigebuigbsdihadfdfiigebuigbsdihadashfbvyuagfawiigebuigbsdihadfdfgashfbvyuagfawiigebuigbsdihadfdfiigebuigbsdihadashfbvyuagfawiigebuigbsdihadfdfgashfbvyuagfawiigebuigbsdihadfdfiigebuigbsdihad".getBytes(StandardCharsets.UTF_8);
         return bytes;
     }
 
     byte[] doPadding(byte[] bytes) {
+        
+        System.out.println("\nPadding input:");
+        System.out.println(bytes.length);
+        System.out.println(Arrays.toString(bytes)+"\n");
+
         int len = bytes.length;
         int tail = len % 64;
         int padding;
@@ -120,33 +113,37 @@ public class Sha256 {
         }
 
         byte[] pad = new byte[padding];
-        pad[0] = (byte) 0x80;
-        long bits = len * 8;
-        for (int i = 0; i < 8; i++) {
-            pad[pad.length - 1 - i] = (byte) ((bits >>> (8 * i)) & 0xFF);
-        }
-
+        pad[0] = (byte) 0x80; // 1 and 7 zeros
+        
+        long bits = len * 8; // message lenght in bits
+        byte[] byteBits = longToBytes(bits);
+        
+        System.arraycopy(byteBits, 0, pad, padding-8, byteBits.length);
+        
         byte[] output = new byte[len + padding];
 
         System.arraycopy(bytes, 0, output, 0, len);
         System.arraycopy(pad, 0, output, len, pad.length);
+        
+        System.out.println("\nPadding output:");
+        System.out.println(output.length);
+        System.out.println(Arrays.toString(output)+"\n");
 
         return output;
     }
+    
+    public static byte[] longToBytes(long l) {
+        byte[] result = new byte[8];
+        for (int i = 7; i >= 0; i--) {
+            result[i] = (byte)(l & 0xFF);
+            l >>= 8;
+        }
+    return result;
+}
 
     Chunk512[] breakToChunks(byte[] bytes) {
         Chunk512[] chunks = new Chunk512[1000];
         return chunks;
-    }
-
-    Word32[] convertToWords32(Chunk512[] chunks) {
-        Word32[] words = new Word32[1000];
-        return words;
-    }
-
-    Word64[] expandToWords64(Word32[] words) {
-        Word64[] word64 = new Word64[1000];
-        return word64;
     }
 
     public void calculate(HashRegister register, int[] words, int j) {
