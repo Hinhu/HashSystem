@@ -12,10 +12,14 @@ package sha256;
 public class Chunk512 {
     private byte[] bytesOfChunk = new byte[64];
 
-    public Chunk512(byte[] bytes) {
-        bytesOfChunk = bytes;        
+    public Chunk512() {      
+    }
+
+    public void setChunk(byte[] bytesOfChunk) {
+        this.bytesOfChunk = bytesOfChunk;
     }
     
+     
     public byte[] getChunk(){
         return bytesOfChunk;
     }

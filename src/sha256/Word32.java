@@ -10,22 +10,26 @@ package sha256;
  * @author zychp
  */
 public class Word32 {
-    private int bytes;
+    private int word;   // Used to store 32 bit binary
 
-    public Word32(int bytes) {
-        this.bytes = bytes;        
+    public Word32(int word) {
+        this.word = word;        
+    }
+    
+    public void setWord(int word) {
+        this.word = word;
     }
     
     public int getWord(){
-        return bytes;
+        return word;
     }
     
     public int getRightRotation (int offset) {
-        return Integer.rotateRight(bytes, offset);    
+        return Integer.rotateRight(word, offset);    
     }
     
     public int getRightShift (int offset) {
-        return (bytes >>> offset);    
+        return (word >>> offset);    
     }
         
     @Override
