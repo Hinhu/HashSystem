@@ -40,7 +40,16 @@ public class KeyGenerator {
         return Operations.vectorToText(xorValC);
     }
 
-    int esincos2(int i){ return 0; }
+    int esincos2(int i){
+        int x, e, s, m, d, c;
+        e = (int)(Math.exp(i%7)*10);
+        m = i%11;
+        d = i%5;
+        s = (int)(Math.sin(e+m*d)*m*10+d)+110;
+        c = (int)(Math.cos(m*d*e)*Math.cos(m*m)*10);
+        x = s-c;
+        return x;
+    }
 
     public String getKeyA() {
         return keyA;
@@ -53,24 +62,4 @@ public class KeyGenerator {
     public String getKeyC() {
         return keyC;
     }
-    
-
-
-
 }
-
-
-
-
-     /*
-        int x, e, s, m, d, c;
-        for(int i=0; i<200; i++){
-            e = (int)(Math.exp(i%7)*10);
-            m = i%11;
-            d = i%5;
-            s = (int)(Math.sin(e+m*d)*m*10+d)+110;
-            c = (int)(Math.cos(m*d*e)*Math.cos(m*m)*10);
-            x = s-c;
-            System.out.println(x);
-        }
-*/

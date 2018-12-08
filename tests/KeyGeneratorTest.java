@@ -68,7 +68,23 @@ public class KeyGeneratorTest {
     }
 
     @Test
-    public void esincos2() {
-        fail();
+    public void esincos2PositiveValue() {
+        int i = 25;
+        int expectedValue = 90;
+        assertEquals(expectedValue, new KeyGenerator("PasswordDoesntMatter").esincos2(i));
+    }
+
+    @Test
+    public void esincos2NegativeValue() {
+        int i = -200;
+        int expectedValue = 116;
+        assertEquals(expectedValue, new KeyGenerator("PasswordDoesntMatter").esincos2(i));
+    }
+
+    @Test
+    public void esincos2ZeroValue() {
+        int i = 0;
+        int expectedValue = 100;
+        assertEquals(expectedValue, new KeyGenerator("PasswordDoesntMatter").esincos2(i));
     }
 }
