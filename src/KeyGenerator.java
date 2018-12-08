@@ -1,17 +1,19 @@
-public class KeyGenerator {
+class KeyGenerator {
     private final int valueA = 47;
     private final int valueB = 31;
     private final int valueC = 91;
     private String keyA;
     private String keyB;
     private String keyC;
+    private String password;
 
-    public KeyGenerator(String password){
+    KeyGenerator(String password){
         if(password.length() < 4)
             throw new IllegalArgumentException("Password must be at least 4 characters long");
         keyA = createKeyA(password);
         keyB = createKeyB(password);
         keyC = createKeyC(password);
+        this.password = password;
     }
 
     private String createKeyA(String password){
@@ -51,15 +53,17 @@ public class KeyGenerator {
         return x;
     }
 
-    public String getKeyA() {
+    String createSubKey(int seed){return new String();}
+
+    String getKeyA() {
         return keyA;
     }
 
-    public String getKeyB() {
+    String getKeyB() {
         return keyB;
     }
 
-    public String getKeyC() {
+    String getKeyC() {
         return keyC;
     }
 }

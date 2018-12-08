@@ -1,13 +1,7 @@
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public final class Operations {
 
     /* converts String to int[] of ASCII codes */
-    public static int[] textToVector(String text){
+    static int[] textToVector(String text){
         int[] vector = new int[text.length()];
         char[] chars = text.toCharArray();
         for(int i=0; i<text.length(); i++){
@@ -17,7 +11,7 @@ public final class Operations {
     }
 
     /* increases each element of vector by certain value */
-    public static int[] addToVector(int[] vector, int delta){
+    static int[] addToVector(int[] vector, int delta){
         int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++)
             result[i] = vector[i] + delta;
@@ -25,7 +19,7 @@ public final class Operations {
     }
 
     /* XORs each element with xorValue */
-    public static int[] xorVector(int[] vector, int xorValue){
+    static int[] xorVector(int[] vector, int xorValue){
         int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++)
             result[i] = vector[i] ^ xorValue;
@@ -33,7 +27,7 @@ public final class Operations {
     }
 
     /* applies bitwise rotation on each element of vector */
-    public static int[] rotateBitwiseVector(int[] vector, int distance){
+    static int[] rotateBitwiseVector(int[] vector, int distance){
         int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++){
             result[i] = Integer.rotateRight(vector[i], distance);
@@ -42,7 +36,7 @@ public final class Operations {
     }
 
     /* converts int[] of ASCII codes to String */
-    public static String vectorToText(int[] vector){
+    static String vectorToText(int[] vector){
         char[] chars = new char[vector.length];
         for(int i=0; i<vector.length; i++)
             chars[i] = (char)vector[i];
@@ -51,7 +45,7 @@ public final class Operations {
     }
 
     /* rotates elements of vector */
-    public static int[] rotateVector(int[] vector, int distance){
+    static int[] rotateVector(int[] vector, int distance){
         int[] tmp = new int[vector.length];
         System.arraycopy(vector, 0, tmp, 0, vector.length);
         for(int i=0; i<vector.length; i++){
@@ -62,7 +56,7 @@ public final class Operations {
     }
 
     /* increments each element by its index multiplied by iterStep */
-    public static int[] addIterToVector(int[] vector, int iterStep){
+    static int[] addIterToVector(int[] vector, int iterStep){
         int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++){
             result[i] = vector[i] + i*iterStep;
@@ -71,7 +65,7 @@ public final class Operations {
     }
 
     /* increases each value from base vector by proper value from second vector */
-    public static int[] addVectorToVector(int[] vector, int[] addVect){
+    static int[] addVectorToVector(int[] vector, int[] addVect){
         if(vector.length != addVect.length)
             throw new IllegalArgumentException("Vectors have different length");
         int[] result = new int[vector.length];
@@ -81,7 +75,7 @@ public final class Operations {
     }
 
     /* XORs i'th element with i+1'th. Last element is XORed with the first of modified vector */
-    public static int[] chainXorVector(int[] vector){
+    static int[] chainXorVector(int[] vector){
         if(vector.length == 0)
             return new int[]{};
         if(vector.length == 1)
@@ -95,7 +89,7 @@ public final class Operations {
     }
 
     /* XORs i'th element with i-1'th, starting from last element of vector */
-    public static int[] reversedChainXorVector(int[] vector){
+    static int[] reversedChainXorVector(int[] vector){
         if(vector.length == 0)
             return new int[]{};
         if(vector.length == 1)
@@ -108,7 +102,7 @@ public final class Operations {
     }
 
     /* XORs each value from vector with proper value from second vector */
-    public static int[] xorWithVector(int[] vector, int[] secondVector){
+    static int[] xorWithVector(int[] vector, int[] secondVector){
         if(vector.length != secondVector.length)
             throw new IllegalArgumentException("Vectors have different length");
         int[] result = new int[vector.length];
@@ -118,7 +112,7 @@ public final class Operations {
     }
 
     /* ANDs each value from vector with proper value from second vector */
-    public static int[] andWithVector(int[] vector, int[] secondVector){
+    static int[] andWithVector(int[] vector, int[] secondVector){
         if(vector.length != secondVector.length)
             throw new IllegalArgumentException("Vectors have different length");
         int[] result = new int[vector.length];
@@ -128,6 +122,35 @@ public final class Operations {
     }
 
     public static void main(String[] args) {
+        String pass = "Haslo";
+        String text = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...";
+        KeyGenerator keygen = new KeyGenerator(pass);
+        String keyA = keygen.getKeyA();
+        String keyB = keygen.getKeyB();
+        String keyC = keygen.getKeyC();
+
+        System.out.println("PASS: "+pass);
+        System.out.println("A: "+keyA);
+        System.out.println("B: "+keyB);
+        System.out.println("C: "+keyC);
+
+        int[] a = Operations.textToVector(keyA);
+        int[] b = Operations.textToVector(keyB);
+        int[] c = Operations.textToVector(keyC);
+        int[] p = Operations.textToVector(pass);
+
+        int esc = keygen.esincos2(0);
+        int[] x = Operations.xorWithVector(p, a);
+        int[] x2 = Operations.xorWithVector(x, b);
+        int[] x3 = Operations.xorWithVector(x2, c);
+        int[] xch = Operations.chainXorVector(x3);
+        int[] xit = Operations.addIterToVector(xch, -1);
+
+        int[] aandb = Operations.andWithVector(a, b);
+        int[] xorab = Operations.xorWithVector(xit, aandb);
+        int[] xesc = Operations.addToVector(xorab, esc);
+        int[] result = Operations.chainXorVector(xesc);
+        System.out.println("SUBKEY: "+Operations.vectorToText(Operations.addToVector(result, 0)));
     }
 }
 

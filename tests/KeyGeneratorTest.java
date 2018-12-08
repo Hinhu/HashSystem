@@ -67,6 +67,7 @@ public class KeyGeneratorTest {
         assertEquals(expectedKey, (new KeyGenerator(password)).getKeyC());
     }
 
+    /* esincos2 method tests */
     @Test
     public void esincos2PositiveValue() {
         int i = 25;
@@ -87,4 +88,30 @@ public class KeyGeneratorTest {
         int expectedValue = 100;
         assertEquals(expectedValue, new KeyGenerator("PasswordDoesntMatter").esincos2(i));
     }
+
+    /* createSubKey method tests */
+    @Test
+    public void createSubKeySeedPositive(){
+        String password = "Haslo";
+        int seed = 5;
+        String expectedSubKey = "\u001AƭŚĿŷ";
+        assertEquals(expectedSubKey, new KeyGenerator(password).createSubKey(seed));
+    }
+
+    @Test
+    public void createSubKeySeedNegative(){
+        String password = "Haslo";
+        int seed = -11;
+        String expectedSubKey = "ú\u00ADúğǇ";
+        assertEquals(expectedSubKey, new KeyGenerator(password).createSubKey(seed));
+    }
+
+    @Test
+    public void createSubKeySeedZero(){
+        String password = "Haslo";
+        int seed = 0;
+        String expectedSubKey = "æ¯úĝǘ";
+        assertEquals(expectedSubKey, new KeyGenerator(password).createSubKey(seed));
+    }
+
 }
