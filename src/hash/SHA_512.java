@@ -1,3 +1,5 @@
+package hash;
+
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -17,7 +19,7 @@ public class SHA_512 {
     
     MessageDigest md;
     
-    SHA_512() throws NoSuchAlgorithmException {
+    public SHA_512() throws NoSuchAlgorithmException {
          this.md = MessageDigest.getInstance("SHA-512");
     }
     

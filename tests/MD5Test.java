@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import hash.MD5;
 import java.security.NoSuchAlgorithmException;
 import org.junit.After;
 import org.junit.AfterClass;

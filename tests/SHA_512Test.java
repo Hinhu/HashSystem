@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import hash.SHA_512;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;

@@ -1,3 +1,5 @@
+package hash;
+
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,7 +20,7 @@ public class MD5 {
     
     MessageDigest md;
     
-    MD5() throws NoSuchAlgorithmException {
+    public MD5() throws NoSuchAlgorithmException {
          this.md = MessageDigest.getInstance("MD5");
     }
     
