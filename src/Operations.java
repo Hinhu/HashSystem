@@ -1,3 +1,9 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public final class Operations {
 
     /* converts String to int[] of ASCII codes */
@@ -12,24 +18,27 @@ public final class Operations {
 
     /* increases each element of vector by certain value */
     public static int[] addToVector(int[] vector, int delta){
+        int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++)
-            vector[i] += delta;
-        return vector;
+            result[i] = vector[i] + delta;
+        return result;
     }
 
     /* XORs each element with xorValue */
     public static int[] xorVector(int[] vector, int xorValue){
+        int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++)
-            vector[i] = vector[i] ^ xorValue;
-        return vector;
+            result[i] = vector[i] ^ xorValue;
+        return result;
     }
 
     /* applies bitwise rotation on each element of vector */
     public static int[] rotateBitwiseVector(int[] vector, int distance){
+        int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++){
-            vector[i] = Integer.rotateRight(vector[i], distance);
+            result[i] = Integer.rotateRight(vector[i], distance);
         }
-        return vector;
+        return result;
     }
 
     /* converts int[] of ASCII codes to String */
@@ -54,19 +63,21 @@ public final class Operations {
 
     /* increments each element by its index multiplied by iterStep */
     public static int[] addIterToVector(int[] vector, int iterStep){
+        int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++){
-            vector[i] += i*iterStep;
+            result[i] = vector[i] + i*iterStep;
         }
-        return vector;
+        return result;
     }
 
     /* increases each value from base vector by proper value from second vector */
     public static int[] addVectorToVector(int[] vector, int[] addVect){
         if(vector.length != addVect.length)
             throw new IllegalArgumentException("Vectors have different length");
+        int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++)
-            vector[i] += addVect[i];
-        return vector;
+            result[i] = vector[i] + addVect[i];
+        return result;
     }
 
     /* XORs i'th element with i+1'th. Last element is XORed with the first of modified vector */
@@ -100,23 +111,30 @@ public final class Operations {
     public static int[] xorWithVector(int[] vector, int[] secondVector){
         if(vector.length != secondVector.length)
             throw new IllegalArgumentException("Vectors have different length");
+        int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++)
-            vector[i] = vector[i] ^ secondVector[i];
-        return vector;
+            result[i] = vector[i] ^ secondVector[i];
+        return result;
     }
 
     /* ANDs each value from vector with proper value from second vector */
     public static int[] andWithVector(int[] vector, int[] secondVector){
         if(vector.length != secondVector.length)
             throw new IllegalArgumentException("Vectors have different length");
+        int[] result = new int[vector.length];
         for(int i=0; i<vector.length; i++)
-            vector[i] = vector[i] & secondVector[i];
-        return vector;
+            result[i] = vector[i] & secondVector[i];
+        return result;
     }
 
     public static void main(String[] args) {
-        System.out.println((char)(Integer.MAX_VALUE));
+        int[] t = {84, 111, 112, 83, 101, 99, 114, 101, 116};
+        int[] i = Operations.addIterToVector(t, 3);
+        int[] x = Operations.xorWithVector(t, i);
 
+        List<Integer> list = Arrays.stream(x).boxed().collect(Collectors.toList());
+
+        System.out.println(list);
     }
 }
 
