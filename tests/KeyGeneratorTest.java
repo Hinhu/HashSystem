@@ -18,15 +18,15 @@ public class KeyGeneratorTest {
     /* Generating keyA tests */
     @Test
     public void createKeyAShorterThan7() {
-        String password = "Has";
-        String expectedKey = "jX¤";
+        String password = "Haslo";
+        String expectedKey = "N2VX\u0080";
         assertEquals(expectedKey, (new KeyGenerator(password)).getKeyA());
     }
 
     @Test
     public void createKeyALongerThan7() {
         String password = "SuperHaslo";
-        String expectedKey = "FiXAN2kU4w";
+        String expectedKey = "N2kU4DFiX\u0080";
         assertEquals(expectedKey, (new KeyGenerator(password)).getKeyA());
     }
 
@@ -41,14 +41,14 @@ public class KeyGeneratorTest {
     @Test
     public void createKeyBShorterThan11() {
         String password = "Passs";
-        String expectedKey = "aoP>\u008D";
+        String expectedKey = "P>>a\u009B";
         assertEquals(expectedKey, (new KeyGenerator(password)).getKeyB());
     }
 
     @Test
     public void createKeyBLongerThan11() {
         String password = "VeryLongPasswd";
-        String expectedKey = "Isa?GuoP>BQpq¯";
+        String expectedKey = "BQpqUIsa?GuoP¦";
         assertEquals(expectedKey, (new KeyGenerator(password)).getKeyB());
     }
 
@@ -62,12 +62,13 @@ public class KeyGeneratorTest {
     /* Generating keyC tests */
     @Test
     public void createKeyC() {
-        String password = "TopSecret";
-        String expectedKey = "gP]A{{VWI{¬";
+        String password = "SuperTajneHaslo";
+        String expectedKey = "D\u001F\u008E¦P%\u0006wÃïtT\u008Azÿ";
         assertEquals(expectedKey, (new KeyGenerator(password)).getKeyC());
     }
 
     @Test
     public void esincos2() {
+        fail();
     }
 }

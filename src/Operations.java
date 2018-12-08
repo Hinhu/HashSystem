@@ -128,13 +128,7 @@ public final class Operations {
     }
 
     public static void main(String[] args) {
-        int[] t = {84, 111, 112, 83, 101, 99, 114, 101, 116};
-        int[] i = Operations.addIterToVector(t, 3);
-        int[] x = Operations.xorWithVector(t, i);
 
-        List<Integer> list = Arrays.stream(x).boxed().collect(Collectors.toList());
-
-        System.out.println(list);
     }
 }
 
