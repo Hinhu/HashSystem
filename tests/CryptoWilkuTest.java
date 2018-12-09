@@ -57,7 +57,7 @@ public class CryptoWilkuTest {
     @Test
     public void decryptTextSameLengthAsPassword() {
         String password = "bardzotajnehaselko";
-        String text = "kDTǃ\u0011Ņ\u001EZ\t=ǀ?EŊM\u0003\u0016Ƈ";
+        String text = "h\u007FÒÖ\u0090*4\u009AaËÊ¥ŎƷĵƹ½:";
         String expected = "tajnawiadomośćdddd";
         assertEquals(expected, CryptoWilku.decrypt(text, password));
     }

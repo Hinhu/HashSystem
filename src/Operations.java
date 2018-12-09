@@ -1,4 +1,4 @@
-public final class Operations {
+final class Operations {
 
     /* converts String to int[] of ASCII codes */
     static int[] textToVector(String text){
@@ -119,49 +119,6 @@ public final class Operations {
         for(int i=0; i<vector.length; i++)
             result[i] = vector[i] & secondVector[i];
         return result;
-    }
-
-    public static void main(String[] args) {
-        String pass = "haselko";
-        String text = "tajnawiadomośćdddd";
-        KeyGenerator keygen = new KeyGenerator(pass);
-        String keyA = keygen.getKeyA();
-        String keyB = keygen.getKeyB();
-        String keyC = keygen.getKeyC();
-
-        System.out.println("PASS: "+pass);
-        System.out.println("A: "+keyA);
-        System.out.println("B: "+keyB);
-        System.out.println("C: "+keyC);
-
-        int seed = 0;
-        int passLength = pass.length();
-        String subkey = "";
-
-        StringBuilder encryptedText = new StringBuilder();
-        for(int i=0; i<text.length(); i++){
-            if(i%passLength == 0) {
-                subkey = keygen.createSubKey(seed);
-                seed++;
-            }
-            encryptedText.append((char) (text.charAt(i) ^ subkey.charAt(i%passLength)));
-        }
-
-        System.out.println("ENDRYPTED: "+encryptedText.toString());
-
-        seed = 0;
-        passLength = pass.length();
-        subkey = "";
-
-        StringBuilder decryptedText = new StringBuilder();
-        for(int i=0; i<encryptedText.length(); i++){
-            if(i%passLength == 0) {
-                subkey = keygen.createSubKey(seed);
-                seed++;
-            }
-            decryptedText.append((char) (encryptedText.charAt(i) ^ subkey.charAt(i%passLength)));
-        }
-        System.out.println("DECRYPTED: "+decryptedText.toString());
     }
 }
 
