@@ -5,17 +5,86 @@
  */
 package hashsystem;
 
+import hash.MD5;
+import hash.SHA_512;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.ParseException;
+
+
 /**
  *
- * @author Maciek
+ * @author User
  */
 public class HashSystem {
 
     /**
      * @param args the command line arguments
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws org.apache.commons.cli.ParseException
+     * @throws java.io.IOException
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) throws NoSuchAlgorithmException, 
+            ParseException,
+            IOException {
+        
+        CommandParser cmdParser = new CommandParser();
+        MD5 md5 = new MD5();
+        SHA_512 sha512 = new SHA_512();
+        
+        cmdParser.cmd = cmdParser.parser.parse(cmdParser.options, args);
+        CommandLine cmd = cmdParser.cmd;
+        
+        String hashType = cmd.getOptionValue("a");
+        
+        String input = "";
+        
+        if(cmd.hasOption("if")) {
+            String inputFile = cmd.getOptionValue("if");
+            try {
+                FileReader inFile = new FileReader(inputFile);
+                int i;
+                while((i = inFile.read()) != -1) {
+                    input += (char)i;
+                }
+                
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(HashSystem.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Input file not found");
+            }
+
+        } else {
+            input = cmd.getOptionValue("i");
+        }
+        
+        String result = null;
+        
+        switch(hashType) {
+            case "md5":
+                result = md5.generateMD5(input);
+                break;
+            case "sha512":
+                result = sha512.generateSHA_512(input);
+                break;
+        }
+        
+        if(cmd.hasOption("of")) {
+            String outputFile = cmd.getOptionValue("of");
+            BufferedWriter outFile = new BufferedWriter(new FileWriter(outputFile));
+            outFile.write(result);
+            outFile.close();
+            
+        } else {
+            System.out.println(result);
+        }
+        
     }
     
 }
