@@ -1,7 +1,7 @@
 public final class CryptoWilku {
     private CryptoWilku(){}
 
-    public static String encrypt(String text, String password){
+    public static String applyCrypto(String text, String password){
 
         KeyGenerator keygen = new KeyGenerator(password);
         int seed = 0;
@@ -18,7 +18,7 @@ public final class CryptoWilku {
         return encryptedText.toString();
     }
 
-
+/*
     public static String decrypt(String encryptedText, String password){
         KeyGenerator keygen = new KeyGenerator(password);
         int seed = 0;
@@ -34,7 +34,7 @@ public final class CryptoWilku {
             decryptedText.append((char) (encryptedText.charAt(i) ^ subkey.charAt(i%passLength)));
         }
         return decryptedText.toString();
-    }
+    }*/
 
 
 }
