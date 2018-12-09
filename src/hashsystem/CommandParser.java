@@ -23,8 +23,9 @@ public class CommandParser {
     CommandParser() {
         this.options = new Options();
         this.options.addOption("a", "algorithm", true, "select hash algorithm").
-                addOption("i", "input", true, "file or stdin to be hashed").
-                addOption("o", "output", false, "output file, if not - stdout");
+                addOption("i", "input", true, "stdin to be hashed").
+                addOption("if", "infile", true, "input file").
+                addOption("of", "outfile", true, "output file, if not - stdout");
         
         this.parser = new DefaultParser();
     }
