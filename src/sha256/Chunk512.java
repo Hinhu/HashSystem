@@ -18,7 +18,9 @@ public class Chunk512 {
         }
     }
 
-    public void setChunk(byte[] bytesOfChunk) {
+    public void setChunk(byte[] bytesOfChunk) throws Exception {
+        if(bytesOfChunk.length != 64)
+            throw new Exception("Array size must be 64");
         this.bytesOfChunk = bytesOfChunk;
     }
     

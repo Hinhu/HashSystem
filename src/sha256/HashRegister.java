@@ -25,7 +25,9 @@ public class HashRegister {
         words[id] = value;
     }
     
-    public void setValue(int[] input) {
+    public void setValue(int[] input) throws Exception {
+        if(input.length != 8)
+            throw new Exception("Input length must be 8");
         System.arraycopy(input, 0, words, 0, 8);
     }
     
