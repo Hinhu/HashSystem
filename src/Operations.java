@@ -122,8 +122,8 @@ public final class Operations {
     }
 
     public static void main(String[] args) {
-        String pass = "Haslo";
-        String text = "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...";
+        String pass = "haselko";
+        String text = "tajnawiadomośćdddd";
         KeyGenerator keygen = new KeyGenerator(pass);
         String keyA = keygen.getKeyA();
         String keyB = keygen.getKeyB();
@@ -134,23 +134,34 @@ public final class Operations {
         System.out.println("B: "+keyB);
         System.out.println("C: "+keyC);
 
-        int[] a = Operations.textToVector(keyA);
-        int[] b = Operations.textToVector(keyB);
-        int[] c = Operations.textToVector(keyC);
-        int[] p = Operations.textToVector(pass);
+        int seed = 0;
+        int passLength = pass.length();
+        String subkey = "";
 
-        int esc = keygen.esincos2(0);
-        int[] x = Operations.xorWithVector(p, a);
-        int[] x2 = Operations.xorWithVector(x, b);
-        int[] x3 = Operations.xorWithVector(x2, c);
-        int[] xch = Operations.chainXorVector(x3);
-        int[] xit = Operations.addIterToVector(xch, -1);
+        StringBuilder encryptedText = new StringBuilder();
+        for(int i=0; i<text.length(); i++){
+            if(i%passLength == 0) {
+                subkey = keygen.createSubKey(seed);
+                seed++;
+            }
+            encryptedText.append((char) (text.charAt(i) ^ subkey.charAt(i%passLength)));
+        }
 
-        int[] aandb = Operations.andWithVector(a, b);
-        int[] xorab = Operations.xorWithVector(xit, aandb);
-        int[] xesc = Operations.addToVector(xorab, esc);
-        int[] result = Operations.chainXorVector(xesc);
-        System.out.println("SUBKEY: "+Operations.vectorToText(Operations.addToVector(result, 0)));
+        System.out.println("ENDRYPTED: "+encryptedText.toString());
+
+        seed = 0;
+        passLength = pass.length();
+        subkey = "";
+
+        StringBuilder decryptedText = new StringBuilder();
+        for(int i=0; i<encryptedText.length(); i++){
+            if(i%passLength == 0) {
+                subkey = keygen.createSubKey(seed);
+                seed++;
+            }
+            decryptedText.append((char) (encryptedText.charAt(i) ^ subkey.charAt(i%passLength)));
+        }
+        System.out.println("DECRYPTED: "+decryptedText.toString());
     }
 }
 
