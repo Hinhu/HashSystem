@@ -1,3 +1,5 @@
+package cryptoWilku;
+
 final class Operations {
 
     /* converts String to int[] of ASCII codes */

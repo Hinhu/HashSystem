@@ -1,3 +1,5 @@
+package cryptoWilku;
+
 public final class CryptoWilku {
     private CryptoWilku(){}
 
@@ -17,24 +19,5 @@ public final class CryptoWilku {
         }
         return encryptedText.toString();
     }
-
-/*
-    public static String decrypt(String encryptedText, String password){
-        KeyGenerator keygen = new KeyGenerator(password);
-        int seed = 0;
-        int passLength = password.length();
-        String subkey = "";
-
-        StringBuilder decryptedText = new StringBuilder();
-        for(int i=0; i<encryptedText.length(); i++){
-            if(i%passLength == 0) {
-                subkey = keygen.createSubKey(seed);
-                seed++;
-            }
-            decryptedText.append((char) (encryptedText.charAt(i) ^ subkey.charAt(i%passLength)));
-        }
-        return decryptedText.toString();
-    }*/
-
 
 }

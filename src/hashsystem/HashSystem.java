@@ -5,18 +5,16 @@
  */
 package hashsystem;
 
+import cryptoWilku.CryptoWilku;
 import hash.MD5;
 import hash.SHA_512;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.ParseException;
+
+import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.ParseException;
 
 
 /**
@@ -31,6 +29,7 @@ public class HashSystem {
      * @throws org.apache.commons.cli.ParseException
      * @throws java.io.IOException
      */
+
     public static void main(String[] args) throws NoSuchAlgorithmException, 
             ParseException,
             IOException {
@@ -45,6 +44,8 @@ public class HashSystem {
         String hashType = cmd.getOptionValue("a");
         
         String input = "";
+
+        String pass = cmd.getOptionValue("p");
         
         if(cmd.hasOption("if")) {
             String inputFile = cmd.getOptionValue("if");
@@ -72,6 +73,9 @@ public class HashSystem {
                 break;
             case "sha512":
                 result = sha512.generateSHA_512(input);
+                break;
+            case "crypto":
+                result = CryptoWilku.applyCrypto(input, pass);
                 break;
         }
         

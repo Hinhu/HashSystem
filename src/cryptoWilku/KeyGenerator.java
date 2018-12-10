@@ -1,3 +1,5 @@
+package cryptoWilku;
+
 class KeyGenerator {
     private final int valueA = 47;
     private final int valueB = 31;

@@ -1,6 +1,8 @@
+package cryptoWilku;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class KeyGeneratorTest {
 
@@ -17,45 +19,17 @@ public class KeyGeneratorTest {
 
     /* Generating keyA tests */
     @Test
-    public void createKeyAShorterThan7() {
-        String password = "Haslo";
-        String expectedKey = "N2VX\u0080";
-        assertEquals(expectedKey, (new KeyGenerator(password)).getKeyA());
-    }
-
-    @Test
-    public void createKeyALongerThan7() {
+    public void createKeyA() {
         String password = "SuperHaslo";
         String expectedKey = "N2kU4DFiX\u0080";
         assertEquals(expectedKey, (new KeyGenerator(password)).getKeyA());
     }
 
-    @Test
-    public void createKeyALengthEquals7() {
-        String password = "HaselkO";
-        String expectedKey = "XAE86Sx";
-        assertEquals(expectedKey, (new KeyGenerator(password)).getKeyA());
-    }
-
     /* Generating keyB tests */
     @Test
-    public void createKeyBShorterThan11() {
-        String password = "Passs";
-        String expectedKey = "P>>a\u009B";
-        assertEquals(expectedKey, (new KeyGenerator(password)).getKeyB());
-    }
-
-    @Test
-    public void createKeyBLongerThan11() {
+    public void createKeyB() {
         String password = "VeryLongPasswd";
         String expectedKey = "BQpqUIsa?GuoP¦";
-        assertEquals(expectedKey, (new KeyGenerator(password)).getKeyB());
-    }
-
-    @Test
-    public void createKeyBLengthEquals11() {
-        String password = "HasloRowneX";
-        String expectedKey = "gP]A{{VWI{¬";
         assertEquals(expectedKey, (new KeyGenerator(password)).getKeyB());
     }
 
