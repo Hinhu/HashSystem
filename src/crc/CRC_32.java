@@ -19,13 +19,6 @@ public class CRC_32 {
     private byte[] value;
     private int len;
 
-    public static void main(String[] args) throws Exception {
-        String text = "ok";
-        String extension = " ye";
-        CRC_32 cryp = new CRC_32();
-        System.out.println(cryp.getFileCRC(new File("C:\\Users\\Bartek\\Desktop\\Minecraft.txt")));
-    }
-
     CRC_32(byte[] buf) {
         this.value = buf;
         this.len = buf.length;
