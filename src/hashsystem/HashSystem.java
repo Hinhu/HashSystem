@@ -45,7 +45,7 @@ public class HashSystem {
         
         String input = "";
 
-        String pass = cmd.getOptionValue("p");
+
         
         if(cmd.hasOption("if")) {
             String inputFile = cmd.getOptionValue("if");
@@ -75,6 +75,7 @@ public class HashSystem {
                 result = sha512.generateSHA_512(input);
                 break;
             case "crypto":
+                String pass = cmd.getOptionValue("p");
                 result = CryptoWilku.applyCrypto(input, pass);
                 break;
         }
