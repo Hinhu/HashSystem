@@ -6,6 +6,7 @@
 package sha256;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,38 +27,47 @@ public class HashRegisterTest {
     public HashRegisterTest() {
     }
     
-    @Test (expected = Exception.class)
+    @Test 
     public void testSetArraySizeTooBig() throws Exception  {
         int[] bytes = new int[9];
-        instance.setValue(bytes);
+        try {
+            instance.setValue(bytes);
+        } catch (ArraySizeNotMatchException e) {
+            assertTrue(true);
+        }
+        
     }
     
-    @Test (expected = Exception.class)
+    @Test
     public void testSetArraySizeTooSmall() throws Exception  {
         int[] bytes = new int[7];
-        instance.setValue(bytes);
+        try {
+            instance.setValue(bytes);
+        } catch (ArraySizeNotMatchException e) {
+            assertTrue(true);
+        }
     }
     
     @Test
     public void testSetGetArraySizeOK() throws Exception  {
-        int[] bytesToSet = new int[8];
+        int[] input = new int[8];
         for(int i=0;i<8;i++){
-            bytesToSet[i] = i;
+            input[i] = i;
         }
-        instance.setValue(bytesToSet); 
-        assertArrayEquals(bytesToSet, instance.getRegisterCopy());
+        instance.setValue(input); 
+        assertArrayEquals(input, instance.getRegisterCopy());
     }
 
 
     @Test
     public void testRollWIthValues() throws Exception {
-        int[] bytesToSet = new int[8];
+        int[] input = new int[8];
         for(int i=0;i<8;i++){
-            bytesToSet[i] = i;
+            input[i] = i;
         }
         int roll1 = 100;
         int roll2 = 200;
-        instance.setValue(bytesToSet);
+        instance.setValue(input);
         instance.rollWIthValues(roll1, roll2);
         
         int[] expected = new int[8];

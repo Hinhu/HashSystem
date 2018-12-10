@@ -58,7 +58,7 @@ public class Sha256Test {
         
         assertArrayEquals(expected, instance.doPadding(input)); 
     }
-    
+        
     @Test
     public void testBytesToString() {
         byte[] input = new byte[10];

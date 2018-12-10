@@ -6,6 +6,7 @@
 package sha256;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 /**
@@ -24,26 +25,34 @@ public class Chunk512Test {
     public Chunk512Test() {
     }
 
-    @Test (expected = Exception.class)
+    @Test
     public void testSetChunkSizeTooBig() throws Exception  {
-        byte[] bytesOfChunk = new byte[100];
-        instance.setChunk(bytesOfChunk);      
+        byte[] input = new byte[100];
+        try {
+            instance.setChunk(input);      
+        } catch (ArraySizeNotMatchException e) {
+            assertTrue(true);
+        }
     }
     
-    @Test (expected = Exception.class)
+    @Test
     public void testSetChunkSizeTooSmall() throws Exception  {
-        byte[] bytesOfChunk = new byte[10];
-        instance.setChunk(bytesOfChunk);      
+        byte[] input = new byte[10];
+        try {
+            instance.setChunk(input);      
+        } catch (ArraySizeNotMatchException e) {
+            assertTrue(true);
+        }
     }
     
     @Test 
     public void testSetGetChunkSizeOK() throws Exception  {
-        byte[] bytesToSet = new byte[64];
+        byte[] input = new byte[64];
         for(int i=0;i<64;i++){
-            bytesToSet[i] = (byte)i;
+            input[i] = (byte)i;
         }
-        instance.setChunk(bytesToSet); 
-        byte[] bytesGet = instance.getChunk();
-        assertArrayEquals(bytesToSet,bytesGet);
+        instance.setChunk(input); 
+        assertArrayEquals(input,instance.getChunk());
     }    
+
 }
