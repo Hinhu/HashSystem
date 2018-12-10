@@ -126,7 +126,7 @@ public class Sha256 {
         
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 4; j++) {
-                words32[i] |= ((chunk.getChunk()[i * 4 + j] & 0xFF) << (24 - j * 8)); // TO CHANGE
+                words32[i] |= ((chunk.getChunk()[i * 4 + j] & 0xFF) << (24 - j * 8));
             }
         }
 
