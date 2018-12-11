@@ -8,11 +8,13 @@ package crc;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.zip.CRC32;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.lang.NullPointerException;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 /**
  *
@@ -93,5 +95,26 @@ public class CRC_32Test {
         //Porównywanie hash
         assertEquals(templateHashValue,testHashValue);
     }
+    
+    @Test
+    public void testToString() throws IOException{
+        String template = "Lorem ipsum";
+        CRC_32 test = new CRC_32();
+        test.update(template.getBytes());
+        assertEquals(template,test.toString());
+    }
+    
+    @Rule public ExpectedException thrown= ExpectedException.none();
+    @Test
+    public void testReset() throws IOException{
+        thrown.expect(NullPointerException.class);
+        String template = "Lorem ipsum";
+        CRC_32 test = new CRC_32();
+        test.update(template.getBytes());
+        test.reset();
+        assertEquals("",test.toString());
+    }
+    
+    
     
 }
