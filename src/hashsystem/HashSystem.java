@@ -5,6 +5,7 @@
  */
 package hashsystem;
 
+import crc.CRC_32;
 import cryptoWilku.CryptoWilku;
 import hash.MD5;
 import hash.SHA_512;
@@ -15,6 +16,7 @@ import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sha256.Sha256;
 
 
 /**
@@ -32,7 +34,8 @@ public class HashSystem {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, 
             ParseException,
-            IOException {
+            IOException,
+            Exception {
         
         CommandParser cmdParser = new CommandParser();
         MD5 md5 = new MD5();
@@ -77,6 +80,15 @@ public class HashSystem {
             case "crypto":
                 String pass = cmd.getOptionValue("p");
                 result = CryptoWilku.applyCrypto(input, pass);
+                break;
+            case "sha256":
+                Sha256 sha256 = new Sha256();
+                result = sha256.getHash(input);
+                break;
+            case "crc32":
+                CRC_32 crc = new CRC_32();
+                crc.update(input.getBytes());
+                result = Long.toString(crc.CRChashCode());
                 break;
         }
         

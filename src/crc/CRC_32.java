@@ -19,12 +19,12 @@ public class CRC_32 {
     private byte[] value;
     private int len;
 
-    CRC_32(byte[] buf) {
+    public CRC_32(byte[] buf) {
         this.value = buf;
         this.len = buf.length;
     }
 
-    CRC_32() {
+    public CRC_32() {
         this.value = null;
         this.len = 0;
     }
