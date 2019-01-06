@@ -41,10 +41,10 @@ public class SHA_512_Benchmark {
 
     /* BENCHMARKS */
     @Benchmark
-    public String applySHA512LongText(MyState state){ return state.sha.generateSHA_512(state.longString); }
+    public String generateSHA_512LongText(MyState state){ return state.sha.generateSHA_512(state.longString); }
 
     @Benchmark
-    public String applySHA512ShortText(MyState state){ return state.sha.generateSHA_512(state.shortString); }
+    public String generateSHA_512ShortText(MyState state){ return state.sha.generateSHA_512(state.shortString); }
 
 
     public static void main(String[] args) throws Exception {

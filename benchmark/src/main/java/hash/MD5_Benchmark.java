@@ -11,7 +11,6 @@ import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.security.NoSuchAlgorithmException;
 
-
 public class MD5_Benchmark {
 
     /* DATA FOR BENCHMARKS */
@@ -41,10 +40,10 @@ public class MD5_Benchmark {
 
     /* BENCHMARKS */
     @Benchmark
-    public String applyMD5LongText(MyState state){ return state.md5.generateMD5(state.longString); }
+    public String generateMD5LongText(MyState state){ return state.md5.generateMD5(state.longString); }
 
     @Benchmark
-    public String applyMD5ShortText(MyState state){ return state.md5.generateMD5(state.shortString); }
+    public String generateMD5ShortText(MyState state){ return state.md5.generateMD5(state.shortString); }
 
 
     public static void main(String[] args) throws Exception {
@@ -61,4 +60,3 @@ public class MD5_Benchmark {
         new Runner(opt).run();
     }
 }
-
