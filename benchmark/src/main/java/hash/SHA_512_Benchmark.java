@@ -12,17 +12,17 @@ import org.openjdk.jmh.runner.options.TimeValue;
 import java.security.NoSuchAlgorithmException;
 
 
-public class MD5_Benchmark {
+public class SHA_512_Benchmark {
 
     /* DATA FOR BENCHMARKS */
     @State(Scope.Thread)
     public static class MyState{
 
-        public MD5 md5;
+        public SHA_512 sha;
 
         {
             try {
-                md5 = new MD5();
+                sha = new SHA_512();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -41,15 +41,15 @@ public class MD5_Benchmark {
 
     /* BENCHMARKS */
     @Benchmark
-    public String applyMD5LongText(MyState state){ return state.md5.generateMD5(state.longString); }
+    public String applySHA512LongText(MyState state){ return state.sha.generateSHA_512(state.longString); }
 
     @Benchmark
-    public String applyMD5ShortText(MyState state){ return state.md5.generateMD5(state.shortString); }
+    public String applySHA512ShortText(MyState state){ return state.sha.generateSHA_512(state.shortString); }
 
 
     public static void main(String[] args) throws Exception {
         Options opt = new OptionsBuilder()
-                .include(MD5_Benchmark.class.getSimpleName())
+                .include(SHA_512_Benchmark.class.getSimpleName())
                 .forks(1)
                 .mode(Mode.All)
                 .measurementIterations(10)
