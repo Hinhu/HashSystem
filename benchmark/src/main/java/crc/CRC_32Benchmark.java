@@ -11,7 +11,6 @@ import org.openjdk.jmh.runner.options.TimeValue;
 
 public class CRC_32Benchmark {
 
-    /* DATA FOR BENCHMARKS */
     @State(Scope.Thread)
     public static class MyState{
 
@@ -37,7 +36,7 @@ public class CRC_32Benchmark {
         // Repetitive text for redundancy check
         public String repetitiveText = "abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc";
 
-        // One char text for redudnancy check
+        // One char text for redundancy check
         public String oneChar = "a";
     }
 
@@ -73,7 +72,7 @@ public class CRC_32Benchmark {
 
     public static void main(String[] args) throws Exception {
         Options opt = new OptionsBuilder()
-                .include(CryptoWilkuBenchmark.class.getSimpleName())
+                .include(CRC_32Benchmark.class.getSimpleName())
                 .forks(1)
                 .mode(Mode.All)
                 .measurementIterations(10)
