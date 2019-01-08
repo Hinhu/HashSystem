@@ -9,6 +9,9 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 public class CRC_32Benchmark {
 
     @State(Scope.Thread)
@@ -43,28 +46,28 @@ public class CRC_32Benchmark {
 
     /* BENCHMARKS */
     @Benchmark
-    public String applyCRCForShortText(MyState state){
+    public long applyCRCForShortText(MyState state) throws IOException {
         state.crc.reset();
         state.crc.update(state.shortText.getBytes());
         return state.crc.CRChashCode();
     }
 
     @Benchmark
-    public String applyCRCForLongText(MyState state){
+    public long applyCRCForLongText(MyState state) throws IOException {
         state.crc.reset();
         state.crc.update(state.longText.getBytes());
         return state.crc.CRChashCode();
     }
 
     @Benchmark
-    public String applyCRCForRepetitiveText(MyState state){
+    public long applyCRCForRepetitiveText(MyState state) throws IOException {
         state.crc.reset();
         state.crc.update(state.repetitiveText.getBytes());
         return state.crc.CRChashCode();
     }
 
     @Benchmark
-    public String applyCRCForOneChar(MyState state){
+    public long applyCRCForOneChar(MyState state) throws IOException {
         state.crc.reset();
         state.crc.update(state.oneChar.getBytes());
         return state.crc.CRChashCode();
@@ -74,13 +77,29 @@ public class CRC_32Benchmark {
         Options opt = new OptionsBuilder()
                 .include(CRC_32Benchmark.class.getSimpleName())
                 .forks(1)
+                .threads(1)
                 .mode(Mode.All)
-                .measurementIterations(10)
+                .timeUnit(TimeUnit.MILLISECONDS)
+                .measurementIterations(16)
+                .measurementTime(TimeValue.milliseconds(150))
+                .warmupIterations(8)
+                .warmupTime(TimeValue.milliseconds(150))
+                .build();
+
+        new Runner(opt).run();
+
+        Options opt8 = new OptionsBuilder()
+                .include(CRC_32Benchmark.class.getSimpleName())
+                .forks(1)
+                .threads(8)
+                .mode(Mode.All)
+                .timeUnit(TimeUnit.MICROSECONDS)
+                .measurementIterations(64)
                 .measurementTime(TimeValue.milliseconds(150))
                 .warmupIterations(10)
                 .warmupTime(TimeValue.milliseconds(150))
                 .build();
 
-        new Runner(opt).run();
+        new Runner(opt8).run();
     }
 }

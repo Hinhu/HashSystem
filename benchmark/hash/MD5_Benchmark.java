@@ -10,6 +10,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.TimeUnit;
 
 public class MD5_Benchmark {
 
@@ -51,6 +52,7 @@ public class MD5_Benchmark {
                 .include(MD5_Benchmark.class.getSimpleName())
                 .forks(1)
                 .mode(Mode.All)
+                .timeUnit(TimeUnit.MILLISECONDS)
                 .measurementIterations(10)
                 .measurementTime(TimeValue.milliseconds(150))
                 .warmupIterations(10)
