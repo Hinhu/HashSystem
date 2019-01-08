@@ -1,5 +1,6 @@
-package hashsystem;
+package RSApack;
 
+import hashsystem.RSApack.*;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.Scope;
@@ -9,7 +10,7 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
-
+import java.util.concurrent.TimeUnit;
 
 
 public class RSABenchmark {
@@ -99,6 +100,7 @@ public class RSABenchmark {
                 .include(RSABenchmark.class.getSimpleName())
                 .forks(1)
                 .mode(Mode.All)
+                .timeUnit(TimeUnit.MILLISECONDS)
                 .measurementIterations(10)
                 .measurementTime(TimeValue.milliseconds(150))
                 .warmupIterations(10)

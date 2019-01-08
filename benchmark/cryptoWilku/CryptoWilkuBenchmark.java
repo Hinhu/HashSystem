@@ -9,6 +9,8 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
+import java.util.concurrent.TimeUnit;
+
 public class CryptoWilkuBenchmark {
 
     /* DATA FOR BENCHMARKS */
@@ -55,6 +57,7 @@ public class CryptoWilkuBenchmark {
                 .include(CryptoWilkuBenchmark.class.getSimpleName())
                 .forks(1)
                 .mode(Mode.All)
+                .timeUnit(TimeUnit.MILLISECONDS)
                 .measurementIterations(10)
                 .measurementTime(TimeValue.milliseconds(150))
                 .warmupIterations(10)
